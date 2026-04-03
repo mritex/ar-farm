@@ -1,0 +1,32 @@
+.about-section {
+  background-color: var(--bg-offwhite);
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  color: var(--primary-color);
+}
+
+.section-body {
+  font-size: 1.15rem;
+  color: #4a5568;
+  margin-bottom: 25px;
+  line-height: 2;
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 80px 20px;
+  }
+  .section-heading {
+    font-size: 2.2rem;
+  }
+}
