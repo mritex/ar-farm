@@ -1,15 +1,19 @@
 import React from 'react';
 import './Shop.css';
-import vegPhoto from '../assets/images/veg_photo.png';
-import fishPhoto from '../assets/images/fish_photo.png';
+import ruiImg from '../assets/images/rui.png';
+import catfishImg from '../assets/images/catfish.png';
+import pabdaImg from '../assets/images/pabda.png';
+import lettuceImg from '../assets/images/lettuce.png';
+import oreganoImg from '../assets/images/oregano.png';
+import custom2 from '../assets/images/custom_2.jpeg';
 
 const MOCK_PRODUCTS = [
-  { id: 1, name: 'Fresh Lettuce', price: '৳ 60', type: 'Vegetable', img: vegPhoto },
-  { id: 2, name: 'Pudina (Mint)', price: '৳ 30', type: 'Herb', img: vegPhoto },
-  { id: 3, name: 'Oregano', price: '৳ 150', type: 'Herb', img: vegPhoto },
-  { id: 4, name: 'Rui Fish', price: '৳ 400', type: 'Fish', img: fishPhoto },
-  { id: 5, name: 'Cat Fish', price: '৳ 350', type: 'Fish', img: fishPhoto },
-  { id: 6, name: 'Pabda Fish', price: '৳ 500', type: 'Fish', img: fishPhoto },
+  { id: 1, name: 'Fresh Lettuce', price: '৳ 60', type: 'Vegetable', img: lettuceImg },
+  { id: 2, name: 'Pudina (Mint)', price: '৳ 30', type: 'Herb', img: custom2 },
+  { id: 3, name: 'Oregano', price: '৳ 150', type: 'Herb', img: oreganoImg },
+  { id: 4, name: 'Rui Fish', price: '৳ 400', type: 'Fish', img: ruiImg },
+  { id: 5, name: 'Cat Fish', price: '৳ 350', type: 'Fish', img: catfishImg },
+  { id: 6, name: 'Pabda Fish', price: '৳ 500', type: 'Fish', img: pabdaImg },
 ];
 
 const Shop = () => {
