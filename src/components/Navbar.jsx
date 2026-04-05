@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import logoImg from '../assets/images/ar_logo_final.png';
 import './Navbar.css';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,8 +16,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Force the white background and dark text on all pages except the Home page hero section.
+  const isHomePage = location.pathname === '/';
+  const navClass = (scrolled || !isHomePage) ? 'navbar scrolled' : 'navbar';
+
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={navClass}>
       <div className="container navbar-container">
         <div className="logo">
           <Link to="/">
