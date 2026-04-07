@@ -14,3 +14,41 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Run commands
+
+### Development
+Starts the Vite development server.
+```powershell
+npm run dev
+```
+
+### Production Build
+Creates a `dist` folder with production-ready assets.
+```powershell
+npm run build
+```
+
+### Preview
+Preview the production build locally.
+```powershell
+npm run preview
+```
+
+### Linting
+Run ESLint to check for code issues.
+```powershell
+npm run lint
+```
+
+## Git Commands
+
+### Push changes to main
+Save and upload your local changes to the main branch.
+```powershell
+git add .
+git commit -m "Update footer and README"
+git push origin main
+```
+
+
