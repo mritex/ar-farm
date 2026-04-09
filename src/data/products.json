@@ -1,58 +1,74 @@
 [
   {
+    "id": 1,
     "name": "Fresh Lettuce",
     "weight": "500 Gm",
     "price": "60 ৳",
     "type": "Vegetable",
     "status": "Hot Sale",
-    "img": "/images/lettuce.png",
-    "id": 1
+    "img": "/images/lettuce.png"
   },
   {
+    "id": 2,
     "name": "Pudina (Mint)",
     "weight": "100 Gm",
     "price": "30 ৳",
     "type": "Herb",
-    "img": "/images/custom_2.jpeg",
-    "id": 2
+    "status": "Regular",
+    "img": "/images/custom_2.jpeg"
   },
   {
+    "id": 3,
     "name": "Oregano",
     "weight": "100 Gm",
     "price": "150 ৳",
     "type": "Herb",
     "status": "Stock Out",
-    "img": "/images/oregano.png",
-    "id": 3
+    "img": "/images/oregano.png"
   },
   {
+    "id": 4,
     "name": "Rui Fish",
     "weight": "1 Kg",
     "price": "400 ৳",
     "type": "Fish",
-    "img": "/images/rui.png",
-    "id": 4
+    "status": "Regular",
+    "img": "/images/rui.png"
   },
   {
+    "id": 5,
     "name": "Cat Fish",
     "weight": "1 KG",
     "price": "450 ৳",
     "type": "Fish",
     "status": "Hot Sale",
-    "img": "/images/catfish.png",
-    "id": 5
+    "img": "/images/catfish.png"
   },
   {
+    "id": 6,
     "name": "Pabda Fish",
     "weight": "250 Gm",
     "price": "150 ৳",
     "type": "Fish",
-    "img": "/images/pabda.png",
-    "id": 6
+    "status": "Regular",
+    "img": "/images/pabda.png"
   },
   {
-    "name": "tomato",
+    "id": 7,
+    "name": "Tomato",
     "weight": "1 KG",
     "price": "80 ৳",
     "type": "Vegetable",
-    "img": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUEBAQEAwUEBAQGBQUGCA0ICAcHCBALDAkNExAUExIQEhIUFx0ZFBYcFhISGiMaHB4fISEhFBkkJyQgJh0gISD/2wBDAQUGBggHCA8ICA8gFRIVICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICD/wAARCAH0AfQDAREAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAMEAgUGBwEI/8QARhAAAQMDAgQCBwYCCQMDBQEAAQACAwQFERIhBjFBURMiBxQyQlJhcSNigZGhsRUzFiRDU5LB0eHwcoKiCLLxFyUmk8LS/8QAGwEBAAIDAQEAAAAAAAAAAAAAAAIDAQQFBgf/xAA1EQEAAgEDAwEHAwIGAwEBAAAAAQIDBBESBRMiMgYUISMxQUJRUmEzcRVDYoGRobHB0STh/9oADAMBAAIRAxEAPwD9loCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgh8dnxH/AAlQ5VS4WPHj+I/4SnKpwseLF3P5FOVWeNjxo/iP5FOdUeNmXis+JOdThZj4kff905VS42ZeKz4k51R4WPFZ8Sc6nCz7rb8QTnVj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)
+    "status": "Regular",
+    "img": "/images/custom_2.jpeg"
+  },
+  {
+    "id": 8,
+    "name": "Custard Apple",
+    "weight": "1 Kg",
+    "price": "250 ৳",
+    "type": "Fruit",
+    "status": "Regular",
+    "img": "/images/custom_2.jpeg"
+  }
+]
