@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
-import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload } from 'lucide-react';
+import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload, RefreshCw } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { products, addProduct, deleteProduct, updateProduct } = useContext(ProductContext);
+  const { products, addProduct, deleteProduct, updateProduct, resetToDefaults } = useContext(ProductContext);
   const navigate = useNavigate();
   
   const [isEditing, setIsEditing] = useState(false);
@@ -289,16 +289,30 @@ const AdminDashboard = () => {
             <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '15px' }}>
               Since we are not using a database, you must copy the JSON below and paste it into <code>src/data/products.json</code> to make your changes permanent for everyone.
             </p>
-            <button 
-              className="btn-add" 
-              style={{ background: '#334155' }}
-              onClick={() => {
-                navigator.clipboard.writeText(JSON.stringify(products, null, 2));
-                alert('JSON copied to clipboard! Paste it into src/data/products.json');
-              }}
-            >
-              Update the Shop page
-            </button>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+              <button 
+                className="btn-add" 
+                style={{ background: '#334155', flex: 1 }}
+                onClick={() => {
+                  navigator.clipboard.writeText(JSON.stringify(products, null, 2));
+                  alert('JSON copied to clipboard! Paste it into src/data/products.json');
+                }}
+              >
+                Update the Shop page
+              </button>
+              <button 
+                className="btn-add" 
+                style={{ background: '#0f172a', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                onClick={() => {
+                  if(window.confirm('This will replace your local admin data with the data currently on the live server. Continue?')) {
+                    resetToDefaults();
+                    alert('Data synced from server successfully!');
+                  }
+                }}
+              >
+                <RefreshCw size={18} /> Sync from Server Data
+              </button>
+            </div>
           </div>
         </div>
       </div>
