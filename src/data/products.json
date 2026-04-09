@@ -52,5 +52,14 @@
     "type": "Fish",
     "status": "Regular",
     "img": "/images/pabda.png"
+  },
+  {
+    "id": 7,
+    "name": "Custard Apple",
+    "weight": "500g",
+    "price": "120 ৳",
+    "type": "Fruit",
+    "status": "Regular",
+    "img": "/images/custom_2.jpeg"
   }
 ]
