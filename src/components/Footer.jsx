@@ -9,9 +9,16 @@ const Footer = () => {
       <div className="footer-container">
         
         <div className="footer-info">
-          <img src={logoImg} alt="AR Farm Logo" className="footer-logo" />
-          <h3 className="footer-title">AR Farm</h3>
-          <p className="footer-tagline">Sustainable • Innovative • Fresh</p>
+          <div className="footer-brand">
+            <img src={logoImg} alt="AR Farm Logo" className="footer-logo" />
+            <div className="footer-brand-text">
+              <h3 className="footer-title">AR Farm</h3>
+              <p className="footer-tagline">Sustainable • Innovative • Fresh</p>
+            </div>
+          </div>
+          <div className="footer-payment">
+            <img src="/images/bkash_payment.jpg" alt="bKash Payment QR Code" className="bkash-qr" />
+          </div>
         </div>
 
         <div className="footer-contact">
