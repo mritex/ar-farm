@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     weight: '',
     price: '',
     type: 'Vegetable',
+    status: 'Regular',
     img: ''
   });
 
@@ -56,6 +57,7 @@ const AdminDashboard = () => {
       weight: product.weight || '',
       price: product.price,
       type: product.type,
+      status: product.status || 'Regular',
       img: product.img
     });
   };
@@ -68,6 +70,7 @@ const AdminDashboard = () => {
       weight: '',
       price: '',
       type: 'Vegetable',
+      status: 'Regular',
       img: ''
     });
   };
@@ -107,6 +110,7 @@ const AdminDashboard = () => {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Weight</th>
+                    <th>Status</th>
                     <th>Type</th>
                     <th>Price</th>
                     <th>Actions</th>
@@ -124,6 +128,11 @@ const AdminDashboard = () => {
                       </td>
                       <td>{product.name}</td>
                       <td>{product.weight}</td>
+                      <td>
+                        <span className={`status-pill status-${(product.status || 'Regular').toLowerCase().replace(' ', '')}`}>
+                          {product.status || 'Regular'}
+                        </span>
+                      </td>
                       <td>{product.type}</td>
                       <td>{product.price}</td>
                       <td>
@@ -193,6 +202,35 @@ const AdminDashboard = () => {
                 />
               </div>
 
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Category</label>
+                  <select 
+                    name="type" 
+                    value={newProduct.type}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Vegetable">Vegetable</option>
+                    <option value="Herb">Herb</option>
+                    <option value="Fruit">Fruit</option>
+                    <option value="Fish">Fish</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Status</label>
+                  <select 
+                    name="status" 
+                    value={newProduct.status}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Regular">Regular</option>
+                    <option value="Hot Sale">Hot Sale</option>
+                    <option value="Stock Out">Stock Out</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label>Price</label>
                 <input 
@@ -205,19 +243,7 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label>Category</label>
-                <select 
-                  name="type"
-                  value={newProduct.type}
-                  onChange={handleInputChange}
-                >
-                  <option value="Vegetable">Vegetable</option>
-                  <option value="Herb">Herb</option>
-                  <option value="Fish">Fish</option>
-                  <option value="Fruit">Fruit</option>
-                </select>
-              </div>
+
 
               <div className="form-group">
                 <label>Product Image</label>

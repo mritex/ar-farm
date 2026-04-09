@@ -150,9 +150,33 @@
 .product-row-img {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
   object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Status Pill Styles */
+.status-pill {
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-regular {
   background: #f1f5f9;
+  color: #64748b;
+}
+
+.status-hotsale {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.status-stockout {
+  background: #f8fafc;
+  color: #94a3b8;
+  border: 1px solid #e2e8f0;
 }
 
 .btn-edit {

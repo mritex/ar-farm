@@ -5,6 +5,7 @@
     "weight": "250g",
     "price": "60 ৳",
     "type": "Vegetable",
+    "status": "Regular",
     "img": "/images/lettuce.png"
   },
   {
@@ -13,6 +14,7 @@
     "weight": "100g",
     "price": "30 ৳",
     "type": "Herb",
+    "status": "Regular",
     "img": "/images/custom_2.jpeg"
   },
   {
@@ -21,6 +23,7 @@
     "weight": "50g",
     "price": "150 ৳",
     "type": "Herb",
+    "status": "Regular",
     "img": "/images/oregano.png"
   },
   {
@@ -29,6 +32,7 @@
     "weight": "1kg",
     "price": "400 ৳",
     "type": "Fish",
+    "status": "Regular",
     "img": "/images/rui.png"
   },
   {
@@ -37,6 +41,7 @@
     "weight": "1kg",
     "price": "350 ৳",
     "type": "Fish",
+    "status": "Regular",
     "img": "/images/catfish.png"
   },
   {
@@ -45,6 +50,7 @@
     "weight": "500g",
     "price": "500 ৳",
     "type": "Fish",
+    "status": "Regular",
     "img": "/images/pabda.png"
   }
 ]
