@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Fresh Lettuce",
-    "weight": "500 Gm",
+    "weight": "250g",
     "price": "60 ৳",
     "type": "Vegetable",
     "status": "Hot Sale",
@@ -11,16 +11,15 @@
   {
     "id": 2,
     "name": "Pudina (Mint)",
-    "weight": "100 Gm",
+    "weight": "100g",
     "price": "30 ৳",
     "type": "Herb",
-    "status": "Regular",
     "img": "/images/custom_2.jpeg"
   },
   {
     "id": 3,
     "name": "Oregano",
-    "weight": "100 Gm",
+    "weight": "50g",
     "price": "150 ৳",
     "type": "Herb",
     "status": "Stock Out",
@@ -29,17 +28,16 @@
   {
     "id": 4,
     "name": "Rui Fish",
-    "weight": "1 Kg",
+    "weight": "1kg",
     "price": "400 ৳",
     "type": "Fish",
-    "status": "Regular",
     "img": "/images/rui.png"
   },
   {
     "id": 5,
     "name": "Cat Fish",
-    "weight": "1 KG",
-    "price": "450 ৳",
+    "weight": "1kg",
+    "price": "350 ৳",
     "type": "Fish",
     "status": "Hot Sale",
     "img": "/images/catfish.png"
@@ -47,28 +45,65 @@
   {
     "id": 6,
     "name": "Pabda Fish",
-    "weight": "250 Gm",
-    "price": "150 ৳",
+    "weight": "500g",
+    "price": "500 ৳",
     "type": "Fish",
-    "status": "Regular",
     "img": "/images/pabda.png"
   },
   {
     "id": 7,
-    "name": "Tomato",
-    "weight": "1 KG",
-    "price": "80 ৳",
-    "type": "Vegetable",
-    "status": "Regular",
-    "img": "/images/custom_2.jpeg"
-  },
-  {
-    "id": 8,
     "name": "Custard Apple",
     "weight": "1 Kg",
     "price": "250 ৳",
     "type": "Fruit",
-    "status": "Regular",
-    "img": "/images/custom_2.jpeg"
+    "img": "/images/custard_apple.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Orange",
+    "weight": "1 Kg",
+    "price": "280 ৳",
+    "type": "Fruit",
+    "img": "/images/orange.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Mango",
+    "weight": "1 Kg",
+    "price": "200 ৳",
+    "type": "Fruit",
+    "img": "/images/mango.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Malta",
+    "weight": "1 Kg",
+    "price": "180 ৳",
+    "type": "Fruit",
+    "img": "/images/malta.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Local Banana",
+    "weight": "1 Dozen",
+    "price": "100 ৳",
+    "type": "Fruit",
+    "img": "/images/banana.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Guava",
+    "weight": "1 Kg",
+    "price": "80 ৳",
+    "type": "Fruit",
+    "img": "/images/guava.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Dragon Fruit",
+    "weight": "1 Kg",
+    "price": "450 ৳",
+    "type": "Fruit",
+    "img": "/images/dragon_fruit.jpg"
   }
 ]
