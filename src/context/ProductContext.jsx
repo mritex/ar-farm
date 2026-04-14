@@ -12,9 +12,21 @@ export const ProductProvider = ({ children }) => {
 
   const [products, setProducts] = useState(() => {
     const savedProducts = localStorage.getItem('ar_farm_products_v2');
-    const data = savedProducts ? JSON.parse(savedProducts) : initialProducts;
-    // Auto-fix any missing symbols in existing data
-    return data.map(p => ({ ...p, price: formatPrice(p.price) }));
+    let data = savedProducts ? JSON.parse(savedProducts) : initialProducts;
+    
+    // Auto-sync: If saved data is missing products from the master JSON (initialProducts), add them.
+    // This handles the case where new products were added to the code.
+    const existingIds = new Set(data.map(p => p.id));
+    let mergedData = [...data];
+
+    initialProducts.forEach(ip => {
+      if (!existingIds.has(ip.id)) {
+        mergedData.push(ip);
+      }
+    });
+
+    // Auto-fix price formats and ensure consistency
+    return mergedData.map(p => ({ ...p, price: formatPrice(p.price) }));
   });
 
   useEffect(() => {
