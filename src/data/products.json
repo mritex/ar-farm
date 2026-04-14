@@ -5,6 +5,7 @@
     "weight": "250g",
     "price": "60 ৳",
     "type": "Vegetable",
+    "status": "Hot Sale",
     "img": "/images/lettuce.png"
   },
   {
@@ -21,6 +22,7 @@
     "weight": "50g",
     "price": "150 ৳",
     "type": "Herb",
+    "status": "Stock Out",
     "img": "/images/oregano.png"
   },
   {
@@ -37,6 +39,7 @@
     "weight": "1kg",
     "price": "350 ৳",
     "type": "Fish",
+    "status": "Hot Sale",
     "img": "/images/catfish.png"
   },
   {
@@ -46,5 +49,61 @@
     "price": "500 ৳",
     "type": "Fish",
     "img": "/images/pabda.png"
+  },
+  {
+    "id": 7,
+    "name": "Custard Apple",
+    "weight": "1 Kg",
+    "price": "250 ৳",
+    "type": "Fruit",
+    "img": "/images/custard_apple.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Orange",
+    "weight": "1 Kg",
+    "price": "280 ৳",
+    "type": "Fruit",
+    "img": "/images/orange.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Mango",
+    "weight": "1 Kg",
+    "price": "200 ৳",
+    "type": "Fruit",
+    "img": "/images/mango.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Malta",
+    "weight": "1 Kg",
+    "price": "180 ৳",
+    "type": "Fruit",
+    "img": "/images/malta.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Local Banana",
+    "weight": "1 Dozen",
+    "price": "100 ৳",
+    "type": "Fruit",
+    "img": "/images/banana.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Guava",
+    "weight": "1 Kg",
+    "price": "80 ৳",
+    "type": "Fruit",
+    "img": "/images/guava.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Dragon Fruit",
+    "weight": "1 Kg",
+    "price": "450 ৳",
+    "type": "Fruit",
+    "img": "/images/dragon_fruit.jpg"
   }
 ]

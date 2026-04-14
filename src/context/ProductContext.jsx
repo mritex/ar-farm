@@ -45,6 +45,7 @@ export const ProductProvider = ({ children }) => {
   // Reset to defaults (from JSON)
   const resetToDefaults = () => {
     setProducts(initialProducts);
+    localStorage.setItem('ar_farm_products_v2', JSON.stringify(initialProducts));
   };
 
   return (

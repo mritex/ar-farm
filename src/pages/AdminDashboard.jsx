@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
-import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload } from 'lucide-react';
+import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload, RefreshCw } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { products, addProduct, deleteProduct, updateProduct } = useContext(ProductContext);
+  const { products, addProduct, deleteProduct, updateProduct, resetToDefaults } = useContext(ProductContext);
   const navigate = useNavigate();
   
   const [isEditing, setIsEditing] = useState(false);
@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     weight: '',
     price: '',
     type: 'Vegetable',
+    status: 'Regular',
     img: ''
   });
 
@@ -56,6 +57,7 @@ const AdminDashboard = () => {
       weight: product.weight || '',
       price: product.price,
       type: product.type,
+      status: product.status || 'Regular',
       img: product.img
     });
   };
@@ -68,6 +70,7 @@ const AdminDashboard = () => {
       weight: '',
       price: '',
       type: 'Vegetable',
+      status: 'Regular',
       img: ''
     });
   };
@@ -107,6 +110,7 @@ const AdminDashboard = () => {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Weight</th>
+                    <th>Status</th>
                     <th>Type</th>
                     <th>Price</th>
                     <th>Actions</th>
@@ -124,6 +128,11 @@ const AdminDashboard = () => {
                       </td>
                       <td>{product.name}</td>
                       <td>{product.weight}</td>
+                      <td>
+                        <span className={`status-pill status-${(product.status || 'Regular').toLowerCase().replace(' ', '')}`}>
+                          {product.status || 'Regular'}
+                        </span>
+                      </td>
                       <td>{product.type}</td>
                       <td>{product.price}</td>
                       <td>
@@ -193,6 +202,35 @@ const AdminDashboard = () => {
                 />
               </div>
 
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Category</label>
+                  <select 
+                    name="type" 
+                    value={newProduct.type}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Vegetable">Vegetable</option>
+                    <option value="Herb">Herb</option>
+                    <option value="Fruit">Fruit</option>
+                    <option value="Fish">Fish</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Status</label>
+                  <select 
+                    name="status" 
+                    value={newProduct.status}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Regular">Regular</option>
+                    <option value="Hot Sale">Hot Sale</option>
+                    <option value="Stock Out">Stock Out</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label>Price</label>
                 <input 
@@ -205,19 +243,7 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label>Category</label>
-                <select 
-                  name="type"
-                  value={newProduct.type}
-                  onChange={handleInputChange}
-                >
-                  <option value="Vegetable">Vegetable</option>
-                  <option value="Herb">Herb</option>
-                  <option value="Fish">Fish</option>
-                  <option value="Fruit">Fruit</option>
-                </select>
-              </div>
+
 
               <div className="form-group">
                 <label>Product Image</label>
@@ -263,16 +289,30 @@ const AdminDashboard = () => {
             <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '15px' }}>
               Since we are not using a database, you must copy the JSON below and paste it into <code>src/data/products.json</code> to make your changes permanent for everyone.
             </p>
-            <button 
-              className="btn-add" 
-              style={{ background: '#334155' }}
-              onClick={() => {
-                navigator.clipboard.writeText(JSON.stringify(products, null, 2));
-                alert('JSON copied to clipboard! Paste it into src/data/products.json');
-              }}
-            >
-              Update the Shop page
-            </button>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+              <button 
+                className="btn-add" 
+                style={{ background: '#334155', flex: 1 }}
+                onClick={() => {
+                  navigator.clipboard.writeText(JSON.stringify(products, null, 2));
+                  alert('JSON copied to clipboard! Paste it into src/data/products.json');
+                }}
+              >
+                Update the Shop page
+              </button>
+              <button 
+                className="btn-add" 
+                style={{ background: '#0f172a', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                onClick={() => {
+                  if(window.confirm('This will replace your local admin data with the data currently on the live server. Continue?')) {
+                    resetToDefaults();
+                    alert('Data synced from server successfully!');
+                  }
+                }}
+              >
+                <RefreshCw size={18} /> Sync from Server Data
+              </button>
+            </div>
           </div>
         </div>
       </div>

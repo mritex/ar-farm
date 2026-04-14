@@ -41,17 +41,30 @@ const Shop = () => {
               <h2 className="category-heading">{cat.title}</h2>
               <div className="product-grid">
                 {categoryProducts.map((product) => (
-                  <div key={product.id} className="product-card">
+                  <div key={product.id} className={`product-card ${product.status === 'Stock Out' ? 'stock-out' : ''}`}>
                     <div 
                       className="product-image" 
                       style={{ backgroundImage: `url(${product.img || 'https://via.placeholder.com/300'})` }}
-                    ></div>
+                    >
+                      {product.status === 'Hot Sale' && (
+                        <img src="/images/badge_hotsale.png" alt="Hot Sale" className="product-badge badge-hotsale" />
+                      )}
+                      {product.status === 'Stock Out' && (
+                        <img src="/images/badge_stockout.png" alt="Stock Out" className="product-badge badge-stockout" />
+                      )}
+                    </div>
                     <div className="product-info">
                       <span className="product-type">{product.type}</span>
                       <h3 className="product-name">{product.name}</h3>
                       {product.weight && <p className="product-weight">{product.weight}</p>}
                       <p className="product-price">{product.price}</p>
-                      <button className="btn-buy" onClick={() => handleOrder(product)}>Order via WhatsApp</button>
+                      <button 
+                        className="btn-buy" 
+                        onClick={() => handleOrder(product)}
+                        disabled={product.status === 'Stock Out'}
+                      >
+                        {product.status === 'Stock Out' ? 'Stock Out' : 'Order via WhatsApp'}
+                      </button>
                     </div>
                   </div>
                 ))}

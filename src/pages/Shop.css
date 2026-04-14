@@ -85,6 +85,46 @@
   height: 250px;
   background-size: cover;
   background-position: center;
+  position: relative;
+}
+
+.product-badge {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+  transition: transform 0.3s ease;
+}
+
+.badge-hotsale {
+  top: -5px;
+  right: -5px;
+  width: 100px;
+  transform: rotate(15deg);
+}
+
+.badge-stockout {
+  top: -15px;
+  left: -5px;
+  width: 130px;
+  transform: rotate(-15deg);
+}
+
+.product-card:hover .product-badge {
+  transform: scale(1.1) rotate(0deg);
+}
+
+.product-card.stock-out .product-image {
+  filter: grayscale(0.5) opacity(0.8);
+}
+
+.btn-buy:disabled {
+  background-color: #e2e8f0 !important;
+  border-color: #e2e8f0 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .product-info {
