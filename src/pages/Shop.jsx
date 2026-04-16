@@ -3,7 +3,7 @@ import './Shop.css';
 import { ProductContext } from '../context/ProductContext';
 
 const Shop = () => {
-  const { products } = useContext(ProductContext);
+  const { products, loading } = useContext(ProductContext);
 
   const handleOrder = (product) => {
     const phoneNumber = '+8801742321888'; // As requested by user
