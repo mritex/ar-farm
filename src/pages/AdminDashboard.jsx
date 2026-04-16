@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
-import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload, RefreshCw } from 'lucide-react';
+import { PlusCircle, Trash2, Edit2, Package, LogOut, X, Upload, RefreshCw, Loader, AlertCircle, CheckCircle } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { products, addProduct, deleteProduct, updateProduct, resetToDefaults } = useContext(ProductContext);
+  const { products, loading, error, addProduct, deleteProduct, updateProduct, refreshProducts } = useContext(ProductContext);
   const navigate = useNavigate();
   
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -26,6 +28,18 @@ const AdminDashboard = () => {
       navigate('/admin/login');
     }
   }, [navigate]);
+
+  // Auto-dismiss notifications after 4 seconds
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
+  const showNotification = (type, message) => {
+    setNotification({ type, message });
+  };
 
   const handleLogout = () => {
     sessionStorage.removeItem('isAdminAuthenticated');
@@ -75,17 +89,43 @@ const AdminDashboard = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newProduct.name && newProduct.price) {
+    if (!newProduct.name || !newProduct.price) return;
+
+    setSaving(true);
+    try {
       if (isEditing) {
-        updateProduct({ ...newProduct, id: editId });
-        alert('Product updated successfully!');
+        const result = await updateProduct({ ...newProduct, id: editId });
+        if (result.success) {
+          showNotification('success', 'Product updated & saved to database!');
+        } else {
+          showNotification('warning', 'Product updated locally, but failed to save to database. It may not persist.');
+        }
       } else {
-        addProduct(newProduct);
-        alert('Product added successfully!');
+        const result = await addProduct(newProduct);
+        if (result.success) {
+          showNotification('success', 'Product added & saved to database!');
+        } else {
+          showNotification('warning', 'Product added locally, but failed to save to database. It may not persist.');
+        }
       }
       resetForm();
+    } catch (err) {
+      showNotification('error', 'Something went wrong: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (product) => {
+    if (!window.confirm(`Delete "${product.name}"?`)) return;
+
+    const result = await deleteProduct(product.id);
+    if (result.success) {
+      showNotification('success', `"${product.name}" deleted from database.`);
+    } else {
+      showNotification('warning', 'Deleted locally, but database sync failed.');
     }
   };
 
@@ -94,74 +134,109 @@ const AdminDashboard = () => {
       <div className="dashboard-container">
         <header className="dashboard-header">
           <h1>Admin Dashboard</h1>
-          <button onClick={handleLogout} className="btn-logout">
-            <LogOut size={18} /> Logout
-          </button>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <button 
+              onClick={refreshProducts} 
+              className="btn-logout" 
+              style={{ background: '#334155' }}
+              title="Refresh from database"
+            >
+              <RefreshCw size={18} /> Refresh
+            </button>
+            <button onClick={handleLogout} className="btn-logout">
+              <LogOut size={18} /> Logout
+            </button>
+          </div>
         </header>
+
+        {/* Notification Banner */}
+        {notification && (
+          <div className={`notification notification-${notification.type}`}>
+            {notification.type === 'success' && <CheckCircle size={18} />}
+            {notification.type === 'error' && <AlertCircle size={18} />}
+            {notification.type === 'warning' && <AlertCircle size={18} />}
+            <span>{notification.message}</span>
+            <button onClick={() => setNotification(null)} className="notification-close">
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        {/* Database Connection Status */}
+        {error && (
+          <div className="notification notification-warning" style={{ marginBottom: '20px' }}>
+            <AlertCircle size={18} />
+            <span>Database connection failed — showing cached data. Changes may not persist. Error: {error}</span>
+          </div>
+        )}
 
         <div className="dashboard-grid">
           {/* Product Management Section */}
           <div className="admin-card">
             <h2><Package size={22} /> Manage Products ({products.length})</h2>
-            <div className="products-table-container">
-              <table className="products-table">
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Weight</th>
-                    <th>Status</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr key={product.id}>
-                      <td>
-                        <img 
-                          src={product.img || 'https://via.placeholder.com/40'} 
-                          alt={product.name} 
-                          className="product-row-img"
-                        />
-                      </td>
-                      <td>{product.name}</td>
-                      <td>{product.weight}</td>
-                      <td>
-                        <span className={`status-pill status-${(product.status || 'Regular').toLowerCase().replace(' ', '')}`}>
-                          {product.status || 'Regular'}
-                        </span>
-                      </td>
-                      <td>{product.type}</td>
-                      <td>{product.price}</td>
-                      <td>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button 
-                            className="btn-edit"
-                            onClick={() => handleEdit(product)}
-                            title="Edit Product"
-                          >
-                            <Edit2 size={16} />
-                          </button>
-                          <button 
-                            className="btn-delete"
-                            onClick={() => {
-                              if (window.confirm('Delete this product?')) {
-                                deleteProduct(product.id);
-                              }
-                            }}
-                            title="Delete Product"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
+            
+            {loading ? (
+              <div className="loading-container">
+                <Loader size={32} className="spinner" />
+                <p>Loading products from database...</p>
+              </div>
+            ) : (
+              <div className="products-table-container">
+                <table className="products-table">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Weight</th>
+                      <th>Status</th>
+                      <th>Type</th>
+                      <th>Price</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {products.map((product) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img 
+                            src={product.img || 'https://via.placeholder.com/40'} 
+                            alt={product.name} 
+                            className="product-row-img"
+                          />
+                        </td>
+                        <td>{product.name}</td>
+                        <td>{product.weight}</td>
+                        <td>
+                          <span className={`status-pill status-${(product.status || 'Regular').toLowerCase().replace(' ', '')}`}>
+                            {product.status || 'Regular'}
+                          </span>
+                        </td>
+                        <td>{product.type}</td>
+                        <td>{product.price}</td>
+                        <td>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button 
+                              className="btn-edit"
+                              onClick={() => handleEdit(product)}
+                              title="Edit Product"
+                            >
+                              <Edit2 size={16} />
+                            </button>
+                            <button 
+                              className="btn-delete"
+                              onClick={() => handleDelete(product)}
+                              title="Delete Product"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* Add Product Sidebar */}
@@ -243,8 +318,6 @@ const AdminDashboard = () => {
                 />
               </div>
 
-
-
               <div className="form-group">
                 <label>Product Image</label>
                 <div className="image-upload-container">
@@ -278,40 +351,23 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <button type="submit" className={isEditing ? "btn-add btn-update" : "btn-add"}>
-                {isEditing ? 'Update Product' : 'Add Product'}
+              <button 
+                type="submit" 
+                className={isEditing ? "btn-add btn-update" : "btn-add"}
+                disabled={saving}
+              >
+                {saving ? (
+                  <><Loader size={16} className="spinner" /> Saving...</>
+                ) : (
+                  isEditing ? 'Update Product' : 'Add Product'
+                )}
               </button>
             </form>
 
-            <hr style={{ margin: '30px 0', border: 'none', borderTop: '1px solid #e2e8f0' }} />
-
-            <h2><Package size={22} /> Save Changes (Sync)</h2>
-            <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '15px' }}>
-              Since we are not using a database, you must copy the JSON below and paste it into <code>src/data/products.json</code> to make your changes permanent for everyone.
-            </p>
-            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-              <button 
-                className="btn-add" 
-                style={{ background: '#334155', flex: 1 }}
-                onClick={() => {
-                  navigator.clipboard.writeText(JSON.stringify(products, null, 2));
-                  alert('JSON copied to clipboard! Paste it into src/data/products.json');
-                }}
-              >
-                Update the Shop page
-              </button>
-              <button 
-                className="btn-add" 
-                style={{ background: '#0f172a', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-                onClick={() => {
-                  if(window.confirm('This will replace your local admin data with the data currently on the live server. Continue?')) {
-                    resetToDefaults();
-                    alert('Data synced from server successfully!');
-                  }
-                }}
-              >
-                <RefreshCw size={18} /> Sync from Server Data
-              </button>
+            {/* Database status info */}
+            <div className="db-status-info">
+              <CheckCircle size={14} />
+              <span>Products are saved directly to the database. Changes persist automatically.</span>
             </div>
           </div>
         </div>
