@@ -1,104 +1,66 @@
-# React + Vite
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-Currently, two official plugins are available:
+## About Laravel
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## React Compiler
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Expanding the ESLint configuration
+## Learning Laravel
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## Run commands
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-### Development
-Starts the Vite development server.
-```powershell
-npm run dev
-```
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-### Production Build
-Creates a `dist` folder with production-ready assets.
-```powershell
-npm run build
-```
+## Laravel Sponsors
 
-### Preview
-Preview the production build locally.
-```powershell
-npm run preview
-```
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Linting
-Run ESLint to check for code issues.
-```powershell
-npm run lint
-```
+### Premium Partners
 
-## Git Commands
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-### Push changes to main
-Save and upload your local changes to the main branch.
-```powershell
-git add .
-git commit -m "Update footer and README"
-git push origin main
-```
+## Contributing
 
-## Admin Panel
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-The AR Farm website includes a built-in administrative panel to manage the Shop products without editing code.
+## Code of Conduct
 
-### Accessing the Panel
-- **URL**: `/admin` or `/admin/login`
-- **Default Credentials**:
-- **Username**: `admin`
-- **Password**: `admin123`
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-### Features
-- **Add Products**: Add new products with name, price, category, and image.
-- **Delete Products**: Remove old or out-of-stock items.
-- **Live Sync**: Changes are instantly reflected on the [Shop Page](/shop).
+## Security Vulnerabilities
 
-### How to Update Your Shop
-1. **Open the Admin Panel**: Go to `/admin` and log in.
-2. **Modify Products**: Change prices or add new products.
-3. **Commit Changes**: Click the **"Update the Shop page"** button at the bottom.
-4. **Finalize**: Paste the copied code into `src/data/products.json` and save.
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-### Persistence (Important)
+## License
 
-Currently, the admin panel uses **`localStorage`** to persist data. 
-- **Demo Mode**: Changes you make are saved in your browser. If you refresh or close the tab, the changes remain.
-- **Production Mode**: To make changes visible to *all* visitors, you need to connect a database.
-
-#### How to connect a Database (Firebase Example)
-1. **Initialize Firebase**: Install `firebase` and create a `src/firebase.js` file with your config.
-2. **Update Context**: Modify `ProductContext.jsx` to fetch/push data to Firestore instead of `localstorage`.
-   ```javascript
-   // Example Firestore sync
-   useEffect(() => {
-     const unsubscribe = onSnapshot(collection(db, "products"), (snapshot) => {
-       setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-     });
-     return unsubscribe;
-   }, []);
-   ```
-
----
-
-## Technical Details
-
-- **Framework**: React 19 + Vite 8
-- **State Management**: React Context API (`ProductContext`)
-- **Icons**: Lucide React
-- **Authentication**: Session-based (Hardcoded for demo)
-
-
-
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

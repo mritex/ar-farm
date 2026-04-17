@@ -1,17 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    // Proxy API calls to the PHP server during development
-    // In production, the PHP files sit alongside the built React app
-    proxy: {
-      '/api': {
-        target: 'http://localhost',
-        changeOrigin: true,
-      },
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.jsx'],
+            refresh: true,
+        }),
+        react(),
+    ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
     },
-  },
-})
+});

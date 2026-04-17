@@ -1,0 +1,82 @@
+import React, { useContext } from 'react';
+import './Shop.css';
+import { ProductContext } from '../context/ProductContext';
+import { CategoryContext } from '../context/CategoryContext';
+
+const Shop = () => {
+  const { products, loading: productsLoading } = useContext(ProductContext);
+  const { categories, loading: categoriesLoading } = useContext(CategoryContext);
+
+  const handleOrder = (product) => {
+    const phoneNumber = '+8801742321888';
+    const pureNumber = phoneNumber.replace(/\+/g, '');
+    const productLink = window.location.href;
+    const weightInfo = product.weight ? ` [${product.weight}]` : '';
+    const message = `Hello AR Farm! I am interested in ordering: ${product.name}${weightInfo} (${product.price}). Is this currently available?\n\nProduct Link: ${productLink}`;
+    const whatsappUrl = `https://wa.me/${pureNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  if (productsLoading || categoriesLoading) {
+    return (
+      <div className="shop-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <p>Loading shop data...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="shop-page">
+      <div className="shop-header">
+        <h1 className="shop-title">Farm Shop</h1>
+        <p className="shop-subtitle">Pure, organic, and locally grown directly from our advanced hydroponic & aquaponic systems.</p>
+      </div>
+
+      <div className="shop-container">
+        {categories.map((cat) => {
+          const categoryProducts = products.filter(p => p.category_id === cat.id);
+          
+          if (categoryProducts.length === 0) return null;
+
+          return (
+            <div key={cat.id} className="shop-category-section">
+              <h2 className="category-heading">{cat.title}</h2>
+              <div className="product-grid">
+                {categoryProducts.map((product) => (
+                  <div key={product.id} className={`product-card ${product.status === 'Stock Out' ? 'stock-out' : ''}`}>
+                    <div 
+                      className="product-image" 
+                      style={{ backgroundImage: `url(${product.img || 'https://via.placeholder.com/300'})` }}
+                    >
+                      {product.status === 'Hot Sale' && (
+                        <img src="/images/badge_hotsale.png" alt="Hot Sale" className="product-badge badge-hotsale" />
+                      )}
+                      {product.status === 'Stock Out' && (
+                        <img src="/images/badge_stockout.png" alt="Stock Out" className="product-badge badge-stockout" />
+                      )}
+                    </div>
+                    <div className="product-info">
+                      <span className="product-type">{cat.name}</span>
+                      <h3 className="product-name">{product.name}</h3>
+                      {product.weight && <p className="product-weight">{product.weight}</p>}
+                      <p className="product-price">{product.price}</p>
+                      <button 
+                        className="btn-buy" 
+                        onClick={() => handleOrder(product)}
+                        disabled={product.status === 'Stock Out'}
+                      >
+                        {product.status === 'Stock Out' ? 'Stock Out' : 'Order via WhatsApp'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Shop;
