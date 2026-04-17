@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('weight')->nullable();
             $table->string('price');
             $table->string('status')->nullable();
-            $table->text('img')->nullable();
+            $table->longText('img')->nullable();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

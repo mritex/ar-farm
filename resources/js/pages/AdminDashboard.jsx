@@ -7,11 +7,13 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const { products, loading: productsLoading, error: productsError, addProduct, deleteProduct, updateProduct, refreshProducts } = useContext(ProductContext);
-  const { categories, loading: categoriesLoading, addCategory, deleteCategory, refreshCategories } = useContext(CategoryContext);
+  const { categories, loading: categoriesLoading, addCategory, updateCategory, deleteCategory, refreshCategories } = useContext(CategoryContext);
   const navigate = useNavigate();
   
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const [editCategoryId, setEditCategoryId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [notification, setNotification] = useState(null);
 
@@ -129,19 +131,51 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleAddCategory = async (e) => {
+  const handleCategorySubmit = async (e) => {
     e.preventDefault();
     if (!newCategory.name || !newCategory.title) return;
     
     setSaving(true);
-    const result = await addCategory(newCategory);
-    if (result.success) {
-      showNotification('success', 'Category added successfully!');
-      setNewCategory({ name: '', title: '' });
-    } else {
-      showNotification('error', result.error);
+    try {
+      if (isEditingCategory) {
+        const result = await updateCategory(editCategoryId, newCategory);
+        if (result.success) {
+          showNotification('success', 'Category updated successfully!');
+          setIsEditingCategory(false);
+          setEditCategoryId(null);
+          setNewCategory({ name: '', title: '' });
+        } else {
+          showNotification('error', result.error);
+        }
+      } else {
+        const result = await addCategory(newCategory);
+        if (result.success) {
+          showNotification('success', 'Category added successfully!');
+          setNewCategory({ name: '', title: '' });
+        } else {
+          showNotification('error', result.error);
+        }
+      }
+    } catch (err) {
+      showNotification('error', 'Something went wrong');
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
+  };
+
+  const handleEditCategory = (category) => {
+    setIsEditingCategory(true);
+    setEditCategoryId(category.id);
+    setNewCategory({
+      name: category.name,
+      title: category.title
+    });
+  };
+
+  const cancelCategoryEdit = () => {
+    setIsEditingCategory(false);
+    setEditCategoryId(null);
+    setNewCategory({ name: '', title: '' });
   };
 
   const handleDeleteCategory = async (id, name) => {
@@ -268,8 +302,8 @@ const AdminDashboard = () => {
             </div>
 
             <div className="admin-card">
-              <h2><Tag size={22} /> Categories</h2>
-              <form onSubmit={handleAddCategory} style={{ marginBottom: '20px' }}>
+              <h2><Tag size={22} /> {isEditingCategory ? 'Edit Category' : 'Categories'}</h2>
+              <form onSubmit={handleCategorySubmit} style={{ marginBottom: '20px' }}>
                 <div className="form-group" style={{ marginBottom: '10px' }}>
                   <label>Type (e.g. Vegetable)</label>
                   <input type="text" name="name" value={newCategory.name} onChange={handleCategoryInputChange} required />
@@ -278,13 +312,28 @@ const AdminDashboard = () => {
                   <label>Display Title (e.g. Fresh Vegetables)</label>
                   <input type="text" name="title" value={newCategory.title} onChange={handleCategoryInputChange} required />
                 </div>
-                <button type="submit" className="btn-add" style={{ background: '#0f172a' }}>Add Category</button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button type="submit" className="btn-add" style={{ background: '#0f172a', flex: 1 }}>
+                    {isEditingCategory ? 'Update Category' : 'Add Category'}
+                  </button>
+                  {isEditingCategory && (
+                    <button type="button" onClick={cancelCategoryEdit} className="btn-edit" style={{ background: '#64748b' }}>
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
               </form>
               <div className="category-list">
                 {categories.map(c => (
-                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
-                    <span>{c.title} ({c.name})</span>
-                    <button onClick={() => handleDeleteCategory(c.id, c.title)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14} /></button>
+                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #eee' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontWeight: '500' }}>{c.title}</span>
+                      <span style={{ fontSize: '11px', color: '#64748b' }}>{c.name}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button onClick={() => handleEditCategory(c)} style={{ background: 'none', border: 'none', color: '#334155', cursor: 'pointer' }}><Edit2 size={14} /></button>
+                      <button onClick={() => handleDeleteCategory(c.id, c.title)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}><Trash2 size={14} /></button>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -62,8 +62,33 @@ export const CategoryProvider = ({ children }) => {
     }
   };
 
+  const updateCategory = async (id, categoryData) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(categoryData),
+      });
+      if (!response.ok) throw new Error('Failed to update category');
+      const updatedCategory = await response.json();
+      setCategories(prev => prev.map(c => c.id === id ? updatedCategory : c));
+      return { success: true };
+    } catch (err) {
+      console.error(err);
+      return { success: false, error: err.message };
+    }
+  };
+
   return (
-    <CategoryContext.Provider value={{ categories, loading, error, addCategory, deleteCategory, refreshCategories: fetchCategories }}>
+    <CategoryContext.Provider value={{ 
+      categories, 
+      loading, 
+      error, 
+      addCategory, 
+      updateCategory, 
+      deleteCategory, 
+      refreshCategories: fetchCategories 
+    }}>
       {children}
     </CategoryContext.Provider>
   );
