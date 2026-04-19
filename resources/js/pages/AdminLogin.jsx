@@ -4,20 +4,40 @@ import { Lock, User } from 'lucide-react';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     
-    // Default credentials as per plan
-    if (username === 'admin' && password === 'admin123') {
-      sessionStorage.setItem('isAdminAuthenticated', 'true');
-      navigate('/admin/dashboard');
-    } else {
-      setError('Invalid username or password');
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        sessionStorage.setItem('isAdminAuthenticated', 'true');
+        sessionStorage.setItem('adminUser', JSON.stringify(data.user));
+        navigate('/admin');
+      } else {
+        setError(data.message || 'Invalid email or password');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,12 +51,12 @@ const AdminLogin = () => {
         
         <form className="login-form" onSubmit={handleLogin}>
           <div className="input-group">
-            <label><User size={16} /> Username</label>
+            <label><User size={16} /> Email Address</label>
             <input 
-              type="text" 
-              placeholder="Enter username" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email" 
+              placeholder="Enter email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -52,7 +72,9 @@ const AdminLogin = () => {
             />
           </div>
           
-          <button type="submit" className="btn-login">Login to Dashboard</button>
+          <button type="submit" className="btn-login" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login to Dashboard'}
+          </button>
         </form>
       </div>
     </div>
