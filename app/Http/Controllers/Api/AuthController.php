@@ -12,11 +12,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'login' => 'required',
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->login)
+                    ->orWhere('name', $request->login)
+                    ->first();
 
         if (!$user || $user->password !== md5($request->password)) {
             return response()->json([

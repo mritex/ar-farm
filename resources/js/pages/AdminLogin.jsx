@@ -4,7 +4,7 @@ import { Lock, User } from 'lucide-react';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const AdminLogin = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ login, password })
       });
 
       const data = await response.json();
@@ -32,7 +32,7 @@ const AdminLogin = () => {
         sessionStorage.setItem('adminUser', JSON.stringify(data.user));
         navigate('/admin');
       } else {
-        setError(data.message || 'Invalid email or password');
+        setError(data.message || 'Invalid credentials');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -51,12 +51,12 @@ const AdminLogin = () => {
         
         <form className="login-form" onSubmit={handleLogin}>
           <div className="input-group">
-            <label><User size={16} /> Email Address</label>
+            <label><User size={16} /> Username or Email</label>
             <input 
-              type="email" 
-              placeholder="Enter email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text" 
+              placeholder="Enter username or email" 
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
               required
             />
           </div>
